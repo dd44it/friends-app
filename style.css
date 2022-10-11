@@ -12,6 +12,10 @@ body {
   background-color: #f2f2f2;
 }
 
+ul {
+  list-style: none;
+}
+
 .friends-app {
   display: grid;
   min-height: 100vh;
@@ -20,6 +24,11 @@ body {
     "header"
     "main"
     "footer";
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .header {
@@ -36,4 +45,32 @@ body {
 
 .footer {
   grid-area: footer;
+}
+
+.friends-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 20px;
+}
+
+.friends-list__item {
+  max-width: 400px;
+  background-color: #f2f2f2;
+  color: rgb(89, 89, 89);
+  border-radius: 12px;
+  box-shadow: 2px 2px 2px 1px rgb(0 0 0 / 21%);
+  padding: 20px;
+  text-align: center;
+}
+.friends-list__item,
+.friends-list__item .user_photo,
+.user_content > * {
+  margin-bottom: 10px;
+}
+
+.user__name {
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: rgb(40, 40, 40);
+  text-align: center;
 }
