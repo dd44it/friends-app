@@ -16,7 +16,7 @@ ul {
   list-style: none;
 }
 
-.friends-app {
+.friends-app-page {
   display: grid;
   min-height: 100vh;
   grid-template: minmax(100px, auto) 1fr minmax(70px, auto) / 1fr;
@@ -58,7 +58,7 @@ ul {
   background-color: #f2f2f2;
   color: rgb(89, 89, 89);
   border-radius: 12px;
-  box-shadow: 2px 2px 2px 1px rgb(0 0 0 / 21%);
+  box-shadow: 2px 2px 2px 3px rgb(0 0 0 / 21%);
   padding: 20px;
   text-align: center;
 }
@@ -66,6 +66,10 @@ ul {
 .friends-list__item .user_photo,
 .user_content > * {
   margin-bottom: 10px;
+}
+
+.user_photo img{
+  border-radius: 30%;
 }
 
 .user__name {
