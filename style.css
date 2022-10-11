@@ -47,6 +47,11 @@ ul {
   grid-area: footer;
 }
 
+.friends-app {
+  display: grid;
+  grid-template-columns: minmax(250px, 600px) 1fr;
+}
+
 .friends-list {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
