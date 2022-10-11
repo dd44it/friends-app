@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="style.css">
   <title>friends app</title>
 </head>
-<body class="friends-app">
+<body class="friends-app-page">
   <header class="header">
     <div class="container">
       <h1 class="title">friends app</h1>
@@ -15,10 +15,74 @@
   </header>
   <main class="main">
     <div class="container">
-      <div class="friends-list-wrapper">
-        <ul class="friends-list">
-        </ul>
-      </div>
+      <section class="friends-app">
+        <section class="filter-friends-wrapper">
+          <ul class="filter-friends">
+            <li class="filter-friends__item filter-sort">
+              <div class="filter-sort__age">
+                <span>sort by age</span>
+                <button class="btn-asc-age">
+                  <img src="images/filter/filter_asc_icon.svg" alt="">
+                </button>
+                <button class="btn-desc-age">
+                  <img src="images/filter/filter_desc_icon.svg" alt="">
+                </button>
+              </div>
+              <div class="filter-sort__age">
+                <span>sort by name</span>
+                <button class="btn-asc-name">
+                  <img src="images/filter/filter_asc_icon.svg" alt="">
+                </button>
+                <button class="btn-desc-name">
+                  <img src="images/filter/filter_desc_icon.svg" alt="">
+                </button>
+              </div>
+            </li>
+
+            <li class="filter-friends__item filter-search">
+              <div class="filter-search__name">
+                <label for="search_name">Search by name</label>
+                <input type="text" id="search_name" class="search search_name">
+                <button class="btn btn-phone-name">Filter by name</button>
+              </div>
+              <div class="filter-search__age">
+                <span >Search by age</span>
+                <label for="age_start">Age start</label>
+                <input type="text" id="age_start" class="search age_start">
+                <label for="age_end">Age end</label>
+                <input type="text" id="age_end" class="search age_end">
+                <button class="btn btn-phone-name">Filter by name</button>
+              </div>
+              <div class="filter-search__phone">
+                <label for="search_phone">Search by phone</label>
+                <input type="text" id="search_phone" class="search search_phone">
+                <button class="btn btn-phone-search">Filter by phone</button>
+              </div>
+            </li>
+
+            <li class="filter-friends__item filter-select">
+              <div class="filter-select__gender">
+                <span >Search gender</span>
+                <label for="male">Male</label>
+                <input type="radio" id="male" class="radio-btn pick_male">
+                <label for="female">Female</label>
+                <input type="radio" id="female" class="radio-btn pick_female">
+                <label for="all">All</label>
+                <input type="radio" id="all" class="radio-btn pick_all">
+                <button class="btn btn-phone-gender">Filter by gender</button>
+              </div>
+            </li>
+
+            <li class="filter-friends__item filter-reset">
+              <button class="btn btn-phone-reset">Reset</button>
+            </li>
+          </ul>
+        </section>
+        <div class="friends-list-wrapper">
+          <ul class="friends-list">
+          </ul>
+        </div>
+      </section>
     </div>
   </main>
   <footer class="footer">
