@@ -27,7 +27,7 @@ ul {
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 1600px;
   margin: 0 auto;
 }
 
@@ -60,10 +60,10 @@ ul {
 
 .friends-list__item {
   max-width: 400px;
-  background-color: #f2f2f2;
+  background-color: #fbfbfb;
   color: rgb(89, 89, 89);
   border-radius: 12px;
-  box-shadow: 2px 2px 2px 3px rgb(0 0 0 / 21%);
+  box-shadow: 2px 2px 2px 3px rgb(0 0 0 / 2%);
   padding: 20px;
   text-align: center;
 }
@@ -74,7 +74,7 @@ ul {
 }
 
 .user_photo img{
-  border-radius: 30%;
+  border-radius: 50%;
 }
 
 .user__name {
@@ -130,7 +130,8 @@ ul {
 
 .btn-name,
 .btn-age,
-.btn-phone {
+.btn-phone,
+.btn-gender {
   width: 150px;
   align-self: flex-end;
 }
