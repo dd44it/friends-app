@@ -12,7 +12,8 @@ body {
   background-color: #f2f2f2;
 }
 
-ul {
+ul, 
+li {
   list-style: none;
 }
 
@@ -33,6 +34,7 @@ ul {
 
 .header {
   grid-area: header;
+  align-self: center;
 }
 
 .title {
@@ -49,7 +51,8 @@ ul {
 
 .friends-app {
   display: grid;
-  grid-template-columns: minmax(250px, 400px) 1fr;
+  grid-template-columns: minmax(250px, 400px) minmax(800px, 1400px);
+  gap: 50px;
 }
 
 .friends-list {
@@ -69,7 +72,9 @@ ul {
 }
 .friends-list__item,
 .friends-list__item .user_photo,
-.user_content > * {
+.user_content > *,
+.filter-friends__item, 
+.search_wrapper {
   margin-bottom: 10px;
 }
 
@@ -88,43 +93,30 @@ ul {
   padding: 20px;
 }
 
-.filter-sort__age,
-.filter-sort__name {
+.flex_column {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+}
+
+.filter-sort__age,
+.filter-sort__name {
   text-align: center;
 }
 
-.filter-friends__item,
-.filter-sort__age,
-.filter-search__name,
-.search_wrapper {
-  margin-bottom: 10px;
-}
-
-.wrapper-btn {
-  display: flex;
-  justify-content: center;
-}
 
 .filter-sort__age .btn:first-child,
 .filter-sort__name .btn:first-child {
   margin-right: 10px;
 }
 
-.filter-search__name,
-.filter-search__age, 
-.filter-search__phone {
-  display: flex;
-  flex-direction: column;
-}
 
 .search_wrapper .search {
   margin-top: 5px;
 }
 
-.title-sort {
+.filter_title {
+  text-align: center;
+  color: rgb(58, 58, 58);
   margin-bottom: 5px;
 }
 
@@ -160,4 +152,38 @@ ul {
 
 .search:focus {
   outline: 1px solid rgb(78, 78, 207);
+}
+
+.filter-select__gender {
+  align-items: center;
+}
+
+.radio_wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin: 10px auto;
+  width: 100%;
+}
+
+.radio_wrapper input[type="radio"] {
+  width: 21px;
+  height: 21px;
+  cursor: pointer;
+}
+
+.radio_item label {
+  line-height: 21px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.radio_item{
+  display: flex;
+  align-items: center;
+}
+
+.filter-reset {
+  text-align: center;
 }
