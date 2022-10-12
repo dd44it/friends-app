@@ -14,75 +14,79 @@
     </div>
   </header>
   <main class="main">
-    <div class="container">
+    <li class="container">
       <section class="friends-app">
         <section class="filter-friends-wrapper">
           <ul class="filter-friends">
-            <li class="filter-friends__item filter-sort">
-              <div class="filter-sort__age">
-                <span class="title-sort">sort by age</span>
-                <div class="wrapper-btn">
-                  <button class="btn btn-asc-age">
-                    <img src="images/filter/filter_asc_icon.svg" alt="">
-                  </button>
-                  <button class="btn btn-desc-age">
-                    <img src="images/filter/filter_desc_icon.svg" alt="">
-                  </button>
-                </div>
+
+            <li class="filter-friends__item flex_column filter-sort__age">
+              <span class="filter_title">sort by age</span>
+              <div class="wrapper-sort-btn">
+                <button class="btn btn-asc-age">
+                  <img src="images/filter/filter_asc_icon.svg" alt="">
+                </button>
+                <button class="btn btn-desc-age">
+                  <img src="images/filter/filter_desc_icon.svg" alt="">
+                </button>
               </div>
-              <div class="filter-sort__name">
-                <span class="title-sort">sort by name</span>
-                <div class="wrapper-btn">
-                  <button class="btn btn-asc-name">
-                    <img src="images/filter/filter_asc_icon.svg" alt="">
-                  </button>
-                  <button class="btn btn-desc-name">
-                    <img src="images/filter/filter_desc_icon.svg" alt="">
-                  </button>
-                </div>
+            </li>
+            <li class="filter-friends__item flex_column filter-sort__name">
+              <span class="filter_title">sort by name</span>
+              <div class="wrapper-btn">
+                <button class="btn btn-asc-name">
+                  <img src="images/filter/filter_asc_icon.svg" alt="">
+                </button>
+                <button class="btn btn-desc-name">
+                  <img src="images/filter/filter_desc_icon.svg" alt="">
+                </button>
               </div>
             </li>
 
-            <li class="filter-friends__item filter-search">
-              <div class="filter-search__name">
-                <div class="search_wrapper">
-                  <label class="label_search" for="search_name">Search by name</label>
-                  <input type="text" id="search_name" class="search search_name">
-                </div>
-                <button class="btn btn-name">Filter by name</button>
+            <li class="filter-friends__item flex_column filter-search__name">
+              <div class="search_wrapper">
+                <label class="label_search" for="search_name">Search by name</label>
+                <input type="text" id="search_name" class="search search_name">
               </div>
-              <div class="filter-search__phone">
-                <div class="search_wrapper">
-                  <label for="search_phone">Search by phone</label>
-                  <input type="text" id="search_phone" class="search search_phone">
-                </div>
-                <button class="btn btn-phone">Filter by phone</button>
-              </div>
-              <div class="filter-search__age">
-                <span >Search by age</span>
-                <div class="search_wrapper">
-                  <label for="age_start">Age start</label>
-                  <input type="text" id="age_start" class="search age_start">
-                </div>
-                <div class="search_wrapper">
-                  <label for="age_end">Age end</label>
-                  <input type="text" id="age_end" class="search age_end">
-                </div>
-                <button class="btn btn-age">Filter by age</button>
-              </div>
+              <button class="btn btn-name">Filter by name</button>
             </li>
 
-            <li class="filter-friends__item filter-select">
-              <div class="filter-select__gender">
-                <span >Search gender</span>
-                <label for="male">Male</label>
-                <input type="radio" id="male" class="radio-btn pick_male">
-                <label for="female">Female</label>
-                <input type="radio" id="female" class="radio-btn pick_female">
-                <label for="all">All</label>
-                <input type="radio" id="all" class="radio-btn pick_all">
-                <button class="btn btn-phone-gender">Filter by gender</button>
+            <li class="filter-friends__item flex_column filter-search__phone">
+              <div class="search_wrapper">
+                <label for="search_phone">Search by phone</label>
+                <input type="text" id="search_phone" class="search search_phone">
               </div>
+              <button class="btn btn-phone">Filter by phone</button>
+            </li>
+            <li class="filter-friends__item flex_column filter-search__age">
+              <span class="filter_title">Search by age</span>
+              <div class="search_wrapper">
+                <label for="age_start">Age start</label>
+                <input type="text" id="age_start" class="search age_start">
+              </div>
+              <div class="search_wrapper">
+                <label for="age_end">Age end</label>
+                <input type="text" id="age_end" class="search age_end">
+              </div>
+              <button class="btn btn-age">Filter by age</button>
+            </li>
+
+            <li class="filter-friends__item flex_column filter-select__gender">
+              <span class="filter_title">Search gender</span>
+              <div class="radio_wrapper">
+                <div class="radio_item">
+                  <label for="male">Male</label>
+                  <input type="radio" id="male" class="radio-btn pick_male" name="choice">
+                </div>
+                <div class="radio_item">
+                  <label for="female">Female</label>
+                  <input type="radio" id="female" class="radio-btn pick_female" name="choice">
+                </div>
+                <div class="radio_item">
+                  <label for="all">All</label>
+                  <input type="radio" id="all" class="radio-btn pick_all" name="choice">
+                </div>
+              </div>
+              <button class="btn btn-gender">Filter by gender</button>
             </li>
 
             <li class="filter-friends__item filter-reset">
