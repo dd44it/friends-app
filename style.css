@@ -151,7 +151,12 @@ li {
 }
 
 .search:focus {
-  outline: 1px solid rgb(78, 78, 207);
+  outline: 1px solid #9595ff;
+}
+
+.radio_wrapper input[type="radio"]:focus-visible,
+.btn:focus-visible {
+  outline: 4px solid #9595ff;
 }
 
 .filter-select__gender {
