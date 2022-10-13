@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const sortByNameAsc = document.querySelector('.btn-asc-name')
   const sortByNameDesc = document.querySelector('.btn-desc-name')
+  const resetBtn = document.querySelector('.btn-reset')
 
   const userNodFinded = '<h2>User not finded</h2>'
   function getData(url, method = "GET"){
@@ -62,6 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   sortByNameAsc.addEventListener('click', (e) => { sortData(e.currentTarget.dataset.typefilter, e.currentTarget.dataset.typesort) })
   sortByNameDesc.addEventListener('click', (e) => { sortData(e.currentTarget.dataset.typefilter, e.currentTarget.dataset.typesort) })
+  resetBtn.addEventListener('click', resetData)
 
 
   // search value
@@ -90,25 +92,28 @@ document.addEventListener('DOMContentLoaded', () => {
   function sortData(typeFilter, typeSort){
     if(config.daraList){
       if(typeFilter === 'age' && typeSort === 'asc'){
-        config.daraList = config.daraList.sort( (a, b) => a.dob.age - b.dob.age)
+        const dataSort = [...config.daraList]
+        dataSort.sort( (a, b) => a.dob.age - b.dob.age)
         friendsList.innerHTML = ''
-        config.daraList.forEach(element => {
+        dataSort.forEach(element => {
           const user = new FriendsList(`${element.name.first} ${element.name.last}`, element.dob.age, element.phone, element.gender, element.picture.large)
           friendsList.insertAdjacentHTML('beforeend', user.render())
         })
       }
 
       else if(typeFilter === 'age' && typeSort === 'desc'){
-        config.daraList = config.daraList.sort( (a, b) => b.dob.age - a.dob.age)
+        const dataSort = [...config.daraList]
+        dataSort.sort( (a, b) => b.dob.age - a.dob.age)
         friendsList.innerHTML = ''
-        config.daraList.forEach(element => {
+        dataSort.forEach(element => {
           const user = new FriendsList(`${element.name.first} ${element.name.last}`, element.dob.age, element.phone, element.gender, element.picture.large)
           friendsList.insertAdjacentHTML('beforeend', user.render())
         })
       }
 
       else if(typeFilter === 'name' && typeSort === 'asc'){
-        config.daraList = config.daraList.sort( (a, b) => { 
+        const dataSort = [...config.daraList]
+        dataSort.sort( (a, b) => { 
           let fa = a.name.first.toLowerCase(),
           fb = b.name.first.toLowerCase()
           if (fa < fb) { return -1 }
@@ -116,14 +121,15 @@ document.addEventListener('DOMContentLoaded', () => {
           return 0
         })
         friendsList.innerHTML = ''
-        config.daraList.forEach(element => {
+        dataSort.forEach(element => {
           const user = new FriendsList(`${element.name.first} ${element.name.last}`, element.dob.age, element.phone, element.gender, element.picture.large)
           friendsList.insertAdjacentHTML('beforeend', user.render())
         })
       }
 
       else if(typeFilter === 'name' && typeSort === 'desc'){
-        config.daraList = config.daraList.sort( (a, b) => {
+        const dataSort = [...config.daraList]
+        dataSort.sort( (a, b) => {
           let fa = a.name.first.toLowerCase(),
           fb = b.name.first.toLowerCase()
           if (fb < fa) { return -1 }
@@ -131,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
           return 0
         })
         friendsList.innerHTML = ''
-        config.daraList.forEach(element => {
+        dataSort.forEach(element => {
           const user = new FriendsList(`${element.name.first} ${element.name.last}`, element.dob.age, element.phone, element.gender, element.picture.large)
           friendsList.insertAdjacentHTML('beforeend', user.render())
         })
@@ -142,4 +148,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // select by gender
 
   // reset
+  function resetData(){
+    friendsList.innerHTML = ''
+    config.daraList.forEach(element => {
+      const user = new FriendsList(`${element.name.first} ${element.name.last}`, element.dob.age, element.phone, element.gender, element.picture.large)
+      friendsList.insertAdjacentHTML('beforeend', user.render())
+    })
+  }
 })
