@@ -5,6 +5,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const friendsList = document.querySelector('.friends-list')
   const searchByName = document.querySelector('.filter-search__name .btn')
   const searchByPhone = document.querySelector('.filter-search__phone .btn')
+  const sortByAgeAsc = document.querySelector('.btn-asc-age')
+  const sortByAgeDesc = document.querySelector('.btn-desc-age')
+
+  const sortByNameAsc = document.querySelector('.btn-asc-name')
+  const sortByNameDesc = document.querySelector('.btn-desc-name')
 
   const userNodFinded = '<h2>User not finded</h2>'
   function getData(url, method = "GET"){
@@ -15,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     res.then(data => {
       if(data.results) config.daraList = data.results
       data.results.forEach(element => {
-        const user = new FriendsList(`${element.name.first} ${element.name.last}`, element.registered.age, element.phone, element.gender, element.picture.large)
+        const user = new FriendsList(`${element.name.first} ${element.name.last}`, element.dob.age, element.phone, element.gender, element.picture.large)
         friendsList.insertAdjacentHTML('beforeend', user.render())
         
       });
@@ -52,6 +57,12 @@ document.addEventListener('DOMContentLoaded', () => {
   getData('https://randomuser.me/api/?page=3&results=20&seed=abc')
   searchByName.addEventListener('click', (e) => { searchData('.search_name', e.target.dataset.filter) })
   searchByPhone.addEventListener('click', (e) => { searchData('.search_phone', e.target.dataset.filter) })
+  sortByAgeAsc.addEventListener('click', (e) => { sortData(e.currentTarget.dataset.typefilter, e.currentTarget.dataset.typesort) })
+  sortByAgeDesc.addEventListener('click', (e) => { sortData(e.currentTarget.dataset.typefilter, e.currentTarget.dataset.typesort) })
+
+  sortByNameAsc.addEventListener('click', (e) => { sortData(e.currentTarget.dataset.typefilter, e.currentTarget.dataset.typesort) })
+  sortByNameDesc.addEventListener('click', (e) => { sortData(e.currentTarget.dataset.typefilter, e.currentTarget.dataset.typesort) })
+
 
   // search value
 
@@ -75,6 +86,58 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // sort type sort
+
+  function sortData(typeFilter, typeSort){
+    if(config.daraList){
+      if(typeFilter === 'age' && typeSort === 'asc'){
+        config.daraList = config.daraList.sort( (a, b) => a.dob.age - b.dob.age)
+        friendsList.innerHTML = ''
+        config.daraList.forEach(element => {
+          const user = new FriendsList(`${element.name.first} ${element.name.last}`, element.dob.age, element.phone, element.gender, element.picture.large)
+          friendsList.insertAdjacentHTML('beforeend', user.render())
+        })
+      }
+
+      else if(typeFilter === 'age' && typeSort === 'desc'){
+        config.daraList = config.daraList.sort( (a, b) => b.dob.age - a.dob.age)
+        friendsList.innerHTML = ''
+        config.daraList.forEach(element => {
+          const user = new FriendsList(`${element.name.first} ${element.name.last}`, element.dob.age, element.phone, element.gender, element.picture.large)
+          friendsList.insertAdjacentHTML('beforeend', user.render())
+        })
+      }
+
+      else if(typeFilter === 'name' && typeSort === 'asc'){
+        config.daraList = config.daraList.sort( (a, b) => { 
+          let fa = a.name.first.toLowerCase(),
+          fb = b.name.first.toLowerCase()
+          if (fa < fb) { return -1 }
+          if (fa > fb) { return 1 }
+          return 0
+        })
+        friendsList.innerHTML = ''
+        config.daraList.forEach(element => {
+          const user = new FriendsList(`${element.name.first} ${element.name.last}`, element.dob.age, element.phone, element.gender, element.picture.large)
+          friendsList.insertAdjacentHTML('beforeend', user.render())
+        })
+      }
+
+      else if(typeFilter === 'name' && typeSort === 'desc'){
+        config.daraList = config.daraList.sort( (a, b) => {
+          let fa = a.name.first.toLowerCase(),
+          fb = b.name.first.toLowerCase()
+          if (fb < fa) { return -1 }
+          if (fb > fa) { return 1 }
+          return 0
+        })
+        friendsList.innerHTML = ''
+        config.daraList.forEach(element => {
+          const user = new FriendsList(`${element.name.first} ${element.name.last}`, element.dob.age, element.phone, element.gender, element.picture.large)
+          friendsList.insertAdjacentHTML('beforeend', user.render())
+        })
+      }
+    }
+  }
 
   // select by gender
 
