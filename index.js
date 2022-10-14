@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const sortByNameDesc = document.querySelector('.btn-desc-name')
   const resetBtn = document.querySelector('.btn-reset')
   const genderBtn = document.querySelector('.btn-gender')
+  const selectAgeMinMaxBtn = document.querySelector('.btn-age')
 
   const userNodFinded = '<h2>User not finded</h2>'
   function getData(url, method = "GET"){
@@ -66,6 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
   sortByNameDesc.addEventListener('click', (e) => { sortData(e.currentTarget.dataset.typefilter, e.currentTarget.dataset.typesort) })
   resetBtn.addEventListener('click', resetData)
   genderBtn.addEventListener('click', (e) => { genderData('.radio_wrapper', 'input[type="radio"]') })
+  selectAgeMinMaxBtn.addEventListener('click', (e) => { selectAgeMinMaxData('.age_start', '.age_end') })
 
 
   // search value
@@ -161,6 +163,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const listGender = config.daraList.filter(item => item.gender === selectedRadioBtn.id)
     friendsList.innerHTML = ''
     listGender.forEach(element => {
+      const user = new FriendsList(`${element.name.first} ${element.name.last}`, element.dob.age, element.phone, element.gender, element.picture.large)
+      friendsList.insertAdjacentHTML('beforeend', user.render())
+    })
+  }
+
+// select by age min and max
+
+  function selectAgeMinMaxData(ageMinSelector, ageMaxSelector){
+    const ageMinElem = document.querySelector(ageMinSelector)
+    const ageMaxElem = document.querySelector(ageMaxSelector)
+    const findDiapazonAge = config.daraList.filter(element => +ageMinElem.value <= element.dob.age && +ageMaxElem.value >= element.dob.age)
+    friendsList.innerHTML = ''
+    findDiapazonAge.forEach(element => {
       const user = new FriendsList(`${element.name.first} ${element.name.last}`, element.dob.age, element.phone, element.gender, element.picture.large)
       friendsList.insertAdjacentHTML('beforeend', user.render())
     })
