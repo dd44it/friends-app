@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const sortByNameAsc = document.querySelector('.btn-asc-name')
   const sortByNameDesc = document.querySelector('.btn-desc-name')
   const resetBtn = document.querySelector('.btn-reset')
+  const genderBtn = document.querySelector('.btn-gender')
 
   const userNodFinded = '<h2>User not finded</h2>'
   function getData(url, method = "GET"){
@@ -64,6 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
   sortByNameAsc.addEventListener('click', (e) => { sortData(e.currentTarget.dataset.typefilter, e.currentTarget.dataset.typesort) })
   sortByNameDesc.addEventListener('click', (e) => { sortData(e.currentTarget.dataset.typefilter, e.currentTarget.dataset.typesort) })
   resetBtn.addEventListener('click', resetData)
+  genderBtn.addEventListener('click', (e) => { genderData('.radio_wrapper', 'input[type="radio"]') })
 
 
   // search value
@@ -149,6 +151,20 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // select by gender
+
+  function genderData(parentWrapperSelector, inputSelector){
+    const parentWrapper = document.querySelector(parentWrapperSelector)
+    const listRadioBtn = parentWrapper.querySelectorAll(inputSelector)
+    const selectedRadioBtn = [...listRadioBtn].find(item => item.checked)
+    if(!selectedRadioBtn) return
+    else if(selectedRadioBtn.id === 'all') return resetData() 
+    const listGender = config.daraList.filter(item => item.gender === selectedRadioBtn.id)
+    friendsList.innerHTML = ''
+    listGender.forEach(element => {
+      const user = new FriendsList(`${element.name.first} ${element.name.last}`, element.dob.age, element.phone, element.gender, element.picture.large)
+      friendsList.insertAdjacentHTML('beforeend', user.render())
+    })
+  }
 
   // reset
   function resetData(){
