@@ -70,21 +70,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function searchData(searchSelector, findByData){
     const searchElem = document.querySelector(searchSelector)
+    const foundData = []
     if(config.daraList){
       config.daraList.forEach(element => {
         if(findByData === 'name' && searchElem.value.length && `${element.name.first} ${element.name.last}`.indexOf(searchElem.value) !== -1){
-          friendsList.innerHTML = ''
           const user = new FriendsList(`${element.name.first} ${element.name.last}`, element.registered.age, element.phone, element.gender, element.picture.large)
-          friendsList.insertAdjacentHTML('beforeend', user.render())
-          // console.log(element.name.first, element.name.last)
+          foundData.push(user)
         }
         else if(findByData === 'phone' && searchElem.value.length && element.phone.indexOf(searchElem.value) !== -1){
-          friendsList.innerHTML = ''
           const user = new FriendsList(`${element.name.first} ${element.name.last}`, element.registered.age, element.phone, element.gender, element.picture.large)
-          friendsList.insertAdjacentHTML('beforeend', user.render())
+          foundData.push(user)
         }
       })
     }
+    if(!foundData.length) return
+    friendsList.innerHTML = ''
+    foundData.forEach(user => {
+      friendsList.insertAdjacentHTML('beforeend', user.render())
+    })
   }
 
   // sort type sort
