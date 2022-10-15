@@ -121,7 +121,6 @@ li {
 }
 
 .btn-name,
-.btn-age,
 .btn-phone,
 .btn-gender {
   width: 150px;
@@ -191,4 +190,25 @@ li {
 
 .filter-reset {
   text-align: center;
+}
+
+.filter-search__age {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.filter-search__age .filter_title,
+.filter-search__age .btn-age {
+  flex: 0 0 100%;
+  max-width: 100%;
+}
+
+.filter-search__age .search_wrapper {
+  flex: 0 0 50%;
+  max-width: 50%;
+  text-align: center;
+}
+
+.filter-search__age .search_wrapper .search {
+  width: 80%;
 }
