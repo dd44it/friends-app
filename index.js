@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const genderBtn = document.querySelector('.btn-gender')
   const selectAgeMinMaxBtn = document.querySelector('.btn-age')
 
-  const userNodFinded = '<h2>User not finded</h2>'
+  const userNodFound = '<h2>User not found</h2>'
 
   async function getData(url){
     try{
@@ -85,17 +85,20 @@ document.addEventListener('DOMContentLoaded', () => {
     if(config.daraList){
       config.daraList.forEach(element => {
         if(findByData === 'name' && searchElem.value.length && `${element.name.first} ${element.name.last}`.indexOf(searchElem.value) !== -1){
-          const user = new FriendsList(`${element.name.first} ${element.name.last}`, element.registered.age, element.phone, element.gender, element.picture.large)
+          const user = new FriendsList(`${element.name.first} ${element.name.last}`, element.dob.age, element.phone, element.gender, element.picture.large)
           foundData.push(user)
         }
         else if(findByData === 'phone' && searchElem.value.length && element.phone.indexOf(searchElem.value) !== -1){
-          const user = new FriendsList(`${element.name.first} ${element.name.last}`, element.registered.age, element.phone, element.gender, element.picture.large)
+          const user = new FriendsList(`${element.name.first} ${element.name.last}`, element.dob.age, element.phone, element.gender, element.picture.large)
           foundData.push(user)
         }
       })
     }
-    if(!foundData.length) return
     friendsList.innerHTML = ''
+    if(!foundData.length) {
+      friendsList.insertAdjacentHTML('beforeend', userNodFound)
+      return
+    }
     foundData.forEach(user => {
       friendsList.insertAdjacentHTML('beforeend', user.render())
     })
