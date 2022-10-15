@@ -173,9 +173,9 @@ document.addEventListener('DOMContentLoaded', () => {
   function selectAgeMinMaxData(ageMinSelector, ageMaxSelector){
     const ageMinElem = document.querySelector(ageMinSelector)
     const ageMaxElem = document.querySelector(ageMaxSelector)
-    const findDiapazonAge = config.daraList.filter(element => +ageMinElem.value <= element.dob.age && +ageMaxElem.value >= element.dob.age)
+    const findDiapasonAge = config.daraList.filter(element => +ageMinElem.value <= element.dob.age && ageMaxElem.value.trim() === '' ? 100 >= element.dob.age : ageMaxElem.value >= element.dob.age)
     friendsList.innerHTML = ''
-    findDiapazonAge.forEach(element => {
+    findDiapasonAge.forEach(element => {
       const user = new FriendsList(`${element.name.first} ${element.name.last}`, element.dob.age, element.phone, element.gender, element.picture.large)
       friendsList.insertAdjacentHTML('beforeend', user.render())
     })
