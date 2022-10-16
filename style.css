@@ -52,13 +52,13 @@ li {
 .friends-app {
   display: grid;
   grid-template-columns: minmax(250px, 400px) minmax(800px, 1400px);
-  gap: 50px;
 }
 
 .friends-list {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 20px;
+  padding: 20px;
 }
 
 .friends-list__item {
@@ -211,4 +211,23 @@ li {
 
 .filter-search__age .search_wrapper .search {
   width: 80%;
+}
+
+@media(max-width: 768px) {
+  .friends-app {
+    gap: 10px;
+    grid-template-columns: minmax(300px, 400px) minmax(600px, 1400px);
+  }
+  .friends-list {
+    grid-template-columns: repeat(auto-fit,  minmax(250px, 1fr));
+  }
+}
+@media(max-width: 475px) {
+  .friends-app {
+    grid-template-columns: 1fr;
+
+  }
+  .friends-list {
+    grid-template-columns: 1fr;
+  }
 }
