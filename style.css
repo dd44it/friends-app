@@ -52,10 +52,10 @@ li {
 .friends-app {
   display: grid;
   grid-template-areas:
-    ". filter-used filter-used"
-    "filter friend-cards friend-cards"
-    "filter friend-cards friend-cards";
-  grid-template-columns: minmax(300px, 450px) repeat(2, minmax(0, 1fr));
+    ". filter-used"
+    "filter friend-cards"
+    "filter friend-cards";
+  grid-template-columns: minmax(300px, 450px) repeat(1, minmax(0, 1fr));
   gap: 20px;
 }
 
@@ -76,12 +76,12 @@ li {
 
 .friends-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(230px, .25fr));
   gap: 20px;
 }
 
 .friends-list__item {
-  max-width: 400px;
+  max-width: 300px;
   background-color: #fbfbfb;
   color: rgb(89, 89, 89);
   border-radius: 12px;
