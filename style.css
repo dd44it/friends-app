@@ -51,14 +51,33 @@ li {
 
 .friends-app {
   display: grid;
-  grid-template-columns: minmax(250px, 400px) minmax(800px, 1400px);
+  grid-template-areas:
+    ". filter-used filter-used"
+    "filter friend-cards friend-cards"
+    "filter friend-cards friend-cards";
+  grid-template-columns: minmax(300px, 450px) repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.filter-used-wrapper {
+  grid-area: filter-used;
+  padding: 20px;
+  border: 3px solid;
+}
+
+.filter-friends-wrapper {
+  grid-area: filter;
+  padding: 20px;
+}
+
+.friends-list-wrapper {
+  grid-area: friend-cards;
 }
 
 .friends-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
   gap: 20px;
-  padding: 20px;
 }
 
 .friends-list__item {
@@ -87,10 +106,6 @@ li {
   font-size: 1.2rem;
   color: rgb(40, 40, 40);
   text-align: center;
-}
-
-.filter-friends-wrapper {
-  padding: 20px;
 }
 
 .flex_column {
@@ -216,18 +231,18 @@ li {
 @media(max-width: 768px) {
   .friends-app {
     gap: 10px;
-    grid-template-columns: minmax(300px, 400px) minmax(600px, 1400px);
+    grid-template-columns: minmax(150px, 1fr) repeat(auto-fit, minmax(170px, 300px));
+    grid-template-areas:
+    "filter filter filter "
+    "filter-used filter-used filter-used"
+    "friend-cards friend-cards friend-cards";
   }
   .friends-list {
-    grid-template-columns: repeat(auto-fit,  minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    padding: 20px;
+    place-items: center;
   }
-}
-@media(max-width: 475px) {
-  .friends-app {
-    grid-template-columns: 1fr;
-
-  }
-  .friends-list {
-    grid-template-columns: 1fr;
+  .friends-list__item {
+    min-width: 100%;
   }
 }
