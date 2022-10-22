@@ -63,6 +63,7 @@ li {
   grid-area: filter-used;
   padding: 20px;
   border: 3px solid;
+  display: flex;
 }
 
 .filter-friends-wrapper {
@@ -226,6 +227,44 @@ li {
 
 .filter-search__age .search_wrapper .search {
   width: 80%;
+}
+
+.filter-used {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  width: max-content;
+  background-color: #fbfbfb;
+  color: rgb(89, 89, 89);
+  border-radius: 12px;
+  box-shadow: 2px 2px 2px 3px rgb(0 0 0 / 2%);
+  padding: 30px 20px 20px 20px;
+  text-align: center;
+  margin-right: 15px;
+}
+
+.name-filter {
+  margin-right: 5px;
+}
+
+.btn-close {
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-weight: bold;
+  border: none;
+  background: #ffb6b6;
+  border-radius: 50%;
+  cursor: pointer;
+  color: #fbfbfb;
+  display: grid;
+  place-items: center;
+}
+
+.btn-close:hover {
+  background: #ff8585;
 }
 
 @media(max-width: 768px) {

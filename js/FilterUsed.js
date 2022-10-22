@@ -5,8 +5,9 @@ export default class FilterUsed {
   }
   render(){
     return `
-    <div class="filter-item">
-      <div class="name-filter"> ${this.nameFilter} </div>
+    <div class="filter-used">
+      <button class="btn-close"> X </button>
+      <div class="name-filter"> ${this.nameFilter}: </div>
       <div class="result-filter"> ${this.resultFilter} </div>
     </div>
     `
