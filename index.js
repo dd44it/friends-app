@@ -1,8 +1,11 @@
 import FriendsList from '/js/FriendsList.js'
+import FilterUsed from '/js/FilterUsed.js'
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  const config = {}
+  const config = {
+    'state': [] 
+  }
   const friendsList = document.querySelector('.friends-list')
   const searchByName = document.querySelector('.filter-search__name .btn')
   const searchByPhone = document.querySelector('.filter-search__phone .btn')
@@ -14,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const resetBtn = document.querySelector('.btn-reset')
   const genderBtn = document.querySelector('.btn-gender')
   const selectAgeMinMaxBtn = document.querySelector('.btn-age')
+  const wrapperFilterUsed = document.querySelector('.filter-used-wrapper')
 
   const userNodFound = '<h2>User not found</h2>'
 
@@ -56,6 +60,11 @@ document.addEventListener('DOMContentLoaded', () => {
   function searchData(searchSelector, findByData){
     const searchElem = document.querySelector(searchSelector)
     const foundData = []
+    const obj = {}
+    obj.type = 'searching'
+    obj.searching = searchElem.value
+    obj.findByData = findByData
+    obj.listResult = []
     if(config.daraList){
       config.daraList.forEach(element => {
         if(findByData === 'name' && searchElem.value.length && `${element.name.first} ${element.name.last}`.indexOf(searchElem.value) !== -1){
@@ -68,14 +77,27 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       })
     }
+    obj.listResult.push(foundData)
+    config.state.push(obj)
+
     friendsList.innerHTML = ''
     if(!foundData.length) {
       friendsList.insertAdjacentHTML('beforeend', userNodFound)
+      const filterUsed = new FilterUsed('searching', searchElem.value)
+      wrapperFilterUsed.insertAdjacentHTML('beforeend', filterUsed.render())
       return
     }
     foundData.forEach(user => {
       friendsList.insertAdjacentHTML('beforeend', user.render())
     })
+    if(config.state){
+      wrapperFilterUsed.innerHTML = ''
+      for(let state of config.state){
+        console.log(state)
+        const filterUsed = new FilterUsed(state.type, state.searching)
+        wrapperFilterUsed.insertAdjacentHTML('beforeend', filterUsed.render())
+      }
+    }
   }
 
   // sort type sort
