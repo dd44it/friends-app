@@ -1,3 +1,5 @@
+import config from "./config.js"
+
 export default class FilterUsed {
   constructor(nameFilter, resultFilter){
     this.nameFilter = nameFilter
@@ -11,5 +13,10 @@ export default class FilterUsed {
       <div class="result-filter"> ${this.resultFilter} </div>
     </div>
     `
+  }
+  remove(){
+    console.log(this)
+    const parentWrapperFilter = this.parentElement
+    parentWrapperFilter.remove()
   }
 }

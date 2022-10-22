@@ -94,6 +94,8 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(state)
         const filterUsed = new FilterUsed(state.type, state.searching)
         wrapperFilterUsed.insertAdjacentHTML('beforeend', filterUsed.render())
+        const btnsClose = wrapperFilterUsed.querySelectorAll('.btn-close')
+        btnsClose.forEach(close => close.addEventListener('click', filterUsed.remove))
       }
     }
   }
