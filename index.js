@@ -1,11 +1,9 @@
 import FriendsList from '/js/FriendsList.js'
 import FilterUsed from '/js/FilterUsed.js'
+import config from '/js/config.js'
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  const config = {
-    'state': [] 
-  }
   const friendsList = document.querySelector('.friends-list')
   const searchByName = document.querySelector('.filter-search__name .btn')
   const searchByPhone = document.querySelector('.filter-search__phone .btn')
