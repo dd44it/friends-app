@@ -59,10 +59,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchElem = document.querySelector(searchSelector)
     const foundData = []
     const obj = {}
+    obj.id = config.state.length + 1
     obj.type = 'searching'
     obj.searching = searchElem.value
     obj.findByData = findByData
     obj.listResult = []
+    if(!searchElem.value.trim()) return
     if(config.daraList){
       config.daraList.forEach(element => {
         if(findByData === 'name' && searchElem.value.length && `${element.name.first} ${element.name.last}`.indexOf(searchElem.value) !== -1){
@@ -89,13 +91,13 @@ document.addEventListener('DOMContentLoaded', () => {
       friendsList.insertAdjacentHTML('beforeend', user.render())
     })
     if(config.state){
+      // console.log(config.state)
       wrapperFilterUsed.innerHTML = ''
       for(let state of config.state){
-        console.log(state)
         const filterUsed = new FilterUsed(state.type, state.searching)
-        wrapperFilterUsed.insertAdjacentHTML('beforeend', filterUsed.render())
+        wrapperFilterUsed.insertAdjacentHTML('beforeend', filterUsed.render(state.id))
         const btnsClose = wrapperFilterUsed.querySelectorAll('.btn-close')
-        btnsClose.forEach(close => close.addEventListener('click', filterUsed.remove))
+        btnsClose.forEach(close => close.addEventListener('click', (e) => { filterUsed.remove(e, state, friendsList) }))
       }
     }
   }
