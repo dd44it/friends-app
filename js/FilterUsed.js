@@ -25,7 +25,7 @@ export default class FilterUsed {
   }
 
   update(state, parentCardWrapper){
-    parentCardWrapper.innerHtml = ''
+    parentCardWrapper.innerHTML = ''
     if(state.length){
       state[state.length - 1].listResult.forEach(element => {
         element.forEach(elem => {
