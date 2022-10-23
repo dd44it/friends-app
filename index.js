@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function drawCard(){
     const data = await getData('https://randomuser.me/api/?page=1&results=20&seed=abc')
-    if(data && data.results) config.daraList = data.results
+    if(data && data.results) config.initialListUsers = data.results
     else return
     data.results.forEach(element => {
       const user = createUser(element)
@@ -65,8 +65,8 @@ document.addEventListener('DOMContentLoaded', () => {
     obj.findByData = findByData
     obj.listResult = []
     if(!searchElem.value.trim()) return
-    if(config.daraList){
-      config.daraList.forEach(element => {
+    if(config.initialListUsers){
+      config.initialListUsers.forEach(element => {
         if(findByData === 'name' && searchElem.value.length && `${element.name.first} ${element.name.last}`.indexOf(searchElem.value) !== -1){
           const user = createUser(element)
           foundData.push(user)
@@ -105,9 +105,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // sort type sort
 
   function sortData(typeFilter, typeSort){
-    if(config.daraList){
+    if(config.initialListUsers){
       if(typeFilter === 'age' && typeSort === 'asc'){
-        const dataSort = [...config.daraList]
+        const dataSort = [...config.initialListUsers]
         dataSort.sort( (a, b) => a.dob.age - b.dob.age)
         friendsList.innerHTML = ''
         dataSort.forEach(element => {
@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       else if(typeFilter === 'age' && typeSort === 'desc'){
-        const dataSort = [...config.daraList]
+        const dataSort = [...config.initialListUsers]
         dataSort.sort( (a, b) => b.dob.age - a.dob.age)
         friendsList.innerHTML = ''
         dataSort.forEach(element => {
@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       else if(typeFilter === 'name' && typeSort === 'asc'){
-        const dataSort = [...config.daraList]
+        const dataSort = [...config.initialListUsers]
         dataSort.sort( (a, b) => { 
           let fa = a.name.first.toLowerCase(),
           fb = b.name.first.toLowerCase()
@@ -143,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       else if(typeFilter === 'name' && typeSort === 'desc'){
-        const dataSort = [...config.daraList]
+        const dataSort = [...config.initialListUsers]
         dataSort.sort( (a, b) => {
           let fa = a.name.first.toLowerCase(),
           fb = b.name.first.toLowerCase()
@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const selectedRadioBtn = [...listRadioBtn].find(item => item.checked)
     if(!selectedRadioBtn) return
     else if(selectedRadioBtn.id === 'all') return resetData() 
-    const listGender = config.daraList.filter(item => item.gender === selectedRadioBtn.id)
+    const listGender = config.initialListUsers.filter(item => item.gender === selectedRadioBtn.id)
     friendsList.innerHTML = ''
     listGender.forEach(element => {
       const user = createUser(element)
@@ -189,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
     else {
       [ageMinElem, ageMaxElem].forEach(elem => elem.style.border = '1px solid #bebebe')
     }
-    const findDiapasonAge = config.daraList.filter(element => +ageMinElem.value <= element.dob.age && +ageMaxElem.value >= element.dob.age)
+    const findDiapasonAge = config.initialListUsers.filter(element => +ageMinElem.value <= element.dob.age && +ageMaxElem.value >= element.dob.age)
     friendsList.innerHTML = ''
     findDiapasonAge.forEach(element => {
       const user = createUser(element)
@@ -200,7 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // reset
   function resetData(){
     friendsList.innerHTML = ''
-    config.daraList.forEach(element => {
+    config.initialListUsers.forEach(element => {
       const user = createUser(element)
       friendsList.insertAdjacentHTML('beforeend', user.render())
     })
