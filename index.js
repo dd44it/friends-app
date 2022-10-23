@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if(data && data.results) config.daraList = data.results
     else return
     data.results.forEach(element => {
-      const user = new FriendsList(`${element.name.first} ${element.name.last}`, element.dob.age, element.phone, element.gender, element.picture.large)
+      const user = createUser(element)
       friendsList.insertAdjacentHTML('beforeend', user.render())
     })
   }
@@ -68,11 +68,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if(config.daraList){
       config.daraList.forEach(element => {
         if(findByData === 'name' && searchElem.value.length && `${element.name.first} ${element.name.last}`.indexOf(searchElem.value) !== -1){
-          const user = new FriendsList(`${element.name.first} ${element.name.last}`, element.dob.age, element.phone, element.gender, element.picture.large)
+          const user = createUser(element)
           foundData.push(user)
         }
         else if(findByData === 'phone' && searchElem.value.length && element.phone.indexOf(searchElem.value) !== -1){
-          const user = new FriendsList(`${element.name.first} ${element.name.last}`, element.dob.age, element.phone, element.gender, element.picture.large)
+          const user = createUser(element)
           foundData.push(user)
         }
       })
@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
         dataSort.sort( (a, b) => a.dob.age - b.dob.age)
         friendsList.innerHTML = ''
         dataSort.forEach(element => {
-          const user = new FriendsList(`${element.name.first} ${element.name.last}`, element.dob.age, element.phone, element.gender, element.picture.large)
+          const user = createUser(element)
           friendsList.insertAdjacentHTML('beforeend', user.render())
         })
       }
@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
         dataSort.sort( (a, b) => b.dob.age - a.dob.age)
         friendsList.innerHTML = ''
         dataSort.forEach(element => {
-          const user = new FriendsList(`${element.name.first} ${element.name.last}`, element.dob.age, element.phone, element.gender, element.picture.large)
+          const user = createUser(element)
           friendsList.insertAdjacentHTML('beforeend', user.render())
         })
       }
@@ -137,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         friendsList.innerHTML = ''
         dataSort.forEach(element => {
-          const user = new FriendsList(`${element.name.first} ${element.name.last}`, element.dob.age, element.phone, element.gender, element.picture.large)
+          const user = createUser(element)
           friendsList.insertAdjacentHTML('beforeend', user.render())
         })
       }
@@ -153,7 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
         friendsList.innerHTML = ''
         dataSort.forEach(element => {
-          const user = new FriendsList(`${element.name.first} ${element.name.last}`, element.dob.age, element.phone, element.gender, element.picture.large)
+          const user = createUser(element)
           friendsList.insertAdjacentHTML('beforeend', user.render())
         })
       }
@@ -171,7 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const listGender = config.daraList.filter(item => item.gender === selectedRadioBtn.id)
     friendsList.innerHTML = ''
     listGender.forEach(element => {
-      const user = new FriendsList(`${element.name.first} ${element.name.last}`, element.dob.age, element.phone, element.gender, element.picture.large)
+      const user = createUser(element)
       friendsList.insertAdjacentHTML('beforeend', user.render())
     })
   }
@@ -192,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const findDiapasonAge = config.daraList.filter(element => +ageMinElem.value <= element.dob.age && +ageMaxElem.value >= element.dob.age)
     friendsList.innerHTML = ''
     findDiapasonAge.forEach(element => {
-      const user = new FriendsList(`${element.name.first} ${element.name.last}`, element.dob.age, element.phone, element.gender, element.picture.large)
+      const user = createUser(element)
       friendsList.insertAdjacentHTML('beforeend', user.render())
     })
   }
@@ -201,8 +201,12 @@ document.addEventListener('DOMContentLoaded', () => {
   function resetData(){
     friendsList.innerHTML = ''
     config.daraList.forEach(element => {
-      const user = new FriendsList(`${element.name.first} ${element.name.last}`, element.dob.age, element.phone, element.gender, element.picture.large)
+      const user = createUser(element)
       friendsList.insertAdjacentHTML('beforeend', user.render())
     })
+  }
+
+  function createUser(element){
+    return new FriendsList(`${element.name.first} ${element.name.last}`, element.dob.age, element.phone, element.gender, element.picture.large)
   }
 })
