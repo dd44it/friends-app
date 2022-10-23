@@ -196,9 +196,13 @@ document.addEventListener('DOMContentLoaded', () => {
 // select by age min and max
 
   function selectAgeMinMaxData(ageMinSelector, ageMaxSelector){
+    const obj = {}
+    obj.id = config.state.length + 1
+    obj.type = 'selectByAge'
     const ageMinElem = document.querySelector(ageMinSelector)
     const ageMaxElem = document.querySelector(ageMaxSelector)
     if(!ageMinElem.value.trim() && !ageMaxElem.value.trim()) return
+    obj.searching = `from ${ageMinElem.value} to ${ageMaxElem.value}`
     if(ageMinElem.value && ageMaxElem.value && +ageMinElem.value > +ageMaxElem.value){
       [ageMinElem, ageMaxElem].forEach(elem => elem.style.border = '1px solid red')
       return
@@ -206,12 +210,16 @@ document.addEventListener('DOMContentLoaded', () => {
     else {
       [ageMinElem, ageMaxElem].forEach(elem => elem.style.border = '1px solid #bebebe')
     }
-    const findDiapasonAge = config.initialListUsers.filter(element => +ageMinElem.value <= element.dob.age && +ageMaxElem.value >= element.dob.age)
+    const dataSelectByAge = config.state.length ? [...config.state[config.state.length - 1].listResultElements] : [...config.initialListUsers]
+    const findDiapasonAge = dataSelectByAge.filter(element => +ageMinElem.value <= element.dob.age && +ageMaxElem.value >= element.dob.age)
     friendsList.innerHTML = ''
-    findDiapasonAge.forEach(element => {
+    obj.listResultElements = findDiapasonAge
+    config.state.push(obj)
+    obj.listResultElements.forEach(element => {
       const user = createUser(element)
       friendsList.insertAdjacentHTML('beforeend', user.render())
     })
+    drawFilterUsedCard(config.state)
   }
 
   // reset
