@@ -57,77 +57,82 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function searchData(searchSelector, findByData){
     const searchElem = document.querySelector(searchSelector)
-    const foundData = []
     const obj = {}
     obj.id = config.state.length + 1
     obj.type = 'searching'
     obj.searching = searchElem.value
     obj.findByData = findByData
     obj.listResult = []
+    obj.listResultElements = []
     if(!searchElem.value.trim()) return
     if(config.initialListUsers){
       config.initialListUsers.forEach(element => {
         if(findByData === 'name' && searchElem.value.length && `${element.name.first} ${element.name.last}`.indexOf(searchElem.value) !== -1){
           const user = createUser(element)
-          foundData.push(user)
+          obj.listResult.push(user)
+          obj.listResultElements.push(element)
         }
         else if(findByData === 'phone' && searchElem.value.length && element.phone.indexOf(searchElem.value) !== -1){
           const user = createUser(element)
-          foundData.push(user)
+          obj.listResult.push(user)
+          obj.listResultElements.push(element)
         }
       })
     }
-    obj.listResult.push(foundData)
     config.state.push(obj)
 
     friendsList.innerHTML = ''
-    if(!foundData.length) {
+    if(!obj.listResult.length) {
       friendsList.insertAdjacentHTML('beforeend', userNodFound)
       const filterUsed = new FilterUsed('searching', searchElem.value)
       wrapperFilterUsed.insertAdjacentHTML('beforeend', filterUsed.render())
       return
     }
-    foundData.forEach(user => {
+    obj.listResult.forEach(user => {
       friendsList.insertAdjacentHTML('beforeend', user.render())
     })
-    if(config.state){
-      // console.log(config.state)
-      wrapperFilterUsed.innerHTML = ''
-      for(let state of config.state){
-        const filterUsed = new FilterUsed(state.type, state.searching)
-        wrapperFilterUsed.insertAdjacentHTML('beforeend', filterUsed.render(state.id))
-        const btnsClose = wrapperFilterUsed.querySelectorAll('.btn-close')
-        btnsClose.forEach(close => close.addEventListener('click', (e) => { filterUsed.remove(e, state, friendsList) }))
-      }
-    }
+    drawFilterUsedCard(config.state)
   }
 
   // sort type sort
 
   function sortData(typeFilter, typeSort){
+    const obj = {}
+    obj.id = config.state.length + 1
+    obj.type = 'sort'
+    obj.typeFilter = typeFilter
+    obj.searching = typeSort
+
     if(config.initialListUsers){
       if(typeFilter === 'age' && typeSort === 'asc'){
-        const dataSort = [...config.initialListUsers]
+        const dataSort = config.state.length ? [...config.state[config.state.length - 1].listResultElements] : [...config.initialListUsers]
+        console.log(dataSort)
         dataSort.sort( (a, b) => a.dob.age - b.dob.age)
         friendsList.innerHTML = ''
+        obj.listResultElements = dataSort
+        config.state.push(obj)
         dataSort.forEach(element => {
           const user = createUser(element)
           friendsList.insertAdjacentHTML('beforeend', user.render())
         })
+        drawFilterUsedCard(config.state)
       }
 
       else if(typeFilter === 'age' && typeSort === 'desc'){
-        const dataSort = [...config.initialListUsers]
+        const dataSort = config.state.length ? [...config.state[config.state.length - 1].listResultElements] : [...config.initialListUsers]
         dataSort.sort( (a, b) => b.dob.age - a.dob.age)
         friendsList.innerHTML = ''
+        obj.listResultElements = dataSort
+        config.state.push(obj)
         dataSort.forEach(element => {
           const user = createUser(element)
           friendsList.insertAdjacentHTML('beforeend', user.render())
         })
+        drawFilterUsedCard(config.state)
       }
 
       else if(typeFilter === 'name' && typeSort === 'asc'){
-        const dataSort = [...config.initialListUsers]
+        const dataSort = config.state.length ? [...config.state[config.state.length - 1].listResultElements] : [...config.initialListUsers]
         dataSort.sort( (a, b) => { 
           let fa = a.name.first.toLowerCase(),
           fb = b.name.first.toLowerCase()
@@ -136,14 +141,17 @@ document.addEventListener('DOMContentLoaded', () => {
           return 0
         })
         friendsList.innerHTML = ''
+        obj.listResultElements = dataSort
+        config.state.push(obj)
         dataSort.forEach(element => {
           const user = createUser(element)
           friendsList.insertAdjacentHTML('beforeend', user.render())
         })
+        drawFilterUsedCard(config.state)
       }
 
       else if(typeFilter === 'name' && typeSort === 'desc'){
-        const dataSort = [...config.initialListUsers]
+        const dataSort = config.state.length ? [...config.state[config.state.length - 1].listResultElements] : [...config.initialListUsers]
         dataSort.sort( (a, b) => {
           let fa = a.name.first.toLowerCase(),
           fb = b.name.first.toLowerCase()
@@ -152,10 +160,13 @@ document.addEventListener('DOMContentLoaded', () => {
           return 0
         })
         friendsList.innerHTML = ''
+        obj.listResultElements = dataSort
+        config.state.push(obj)
         dataSort.forEach(element => {
           const user = createUser(element)
           friendsList.insertAdjacentHTML('beforeend', user.render())
         })
+        drawFilterUsedCard(config.state)
       }
     }
   }
@@ -209,4 +220,17 @@ document.addEventListener('DOMContentLoaded', () => {
   function createUser(element){
     return new FriendsList(`${element.name.first} ${element.name.last}`, element.dob.age, element.phone, element.gender, element.picture.large)
   }
+
+  function drawFilterUsedCard(state){
+    console.log(state)
+    if(!state.length) return
+    wrapperFilterUsed.innerHTML = ''
+    for(let elemState of state){
+      const filterUsed = new FilterUsed(elemState.type, elemState.searching)
+      wrapperFilterUsed.insertAdjacentHTML('beforeend', filterUsed.render(elemState.id))
+      const btnsClose = wrapperFilterUsed.querySelectorAll('.btn-close')
+      btnsClose.forEach(close => close.addEventListener('click', (e) => { filterUsed.remove(e, elemState, friendsList) }))
+    }
+  }
+
 })

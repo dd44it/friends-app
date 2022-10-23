@@ -27,14 +27,13 @@ export default class FilterUsed {
   update(state, parentCardWrapper){
     parentCardWrapper.innerHTML = ''
     if(state.length){
-      state[state.length - 1].listResult.forEach(element => {
-        element.forEach(elem => {
-          parentCardWrapper.insertAdjacentHTML('beforeend', elem.render())
-        })
+      state[state.length - 1].listResultElements.forEach(element => {
+        const user = new FriendsList(`${element.name.first} ${element.name.last}`, element.dob.age, element.phone, element.gender, element.picture.large)
+        parentCardWrapper.insertAdjacentHTML('beforeend', user.render())
       })
     }
     else{
-      config.daraList.forEach(element => {
+      config.initialListUsers.forEach(element => {
         const user = new FriendsList(`${element.name.first} ${element.name.last}`, element.dob.age, element.phone, element.gender, element.picture.large)
         parentCardWrapper.insertAdjacentHTML('beforeend', user.render())
       })
