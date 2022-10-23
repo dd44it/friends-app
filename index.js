@@ -64,21 +64,20 @@ document.addEventListener('DOMContentLoaded', () => {
     obj.findByData = findByData
     obj.listResult = []
     obj.listResultElements = []
-    if(!searchElem.value.trim()) return
-    if(config.initialListUsers){
-      config.initialListUsers.forEach(element => {
-        if(findByData === 'name' && searchElem.value.length && `${element.name.first} ${element.name.last}`.indexOf(searchElem.value) !== -1){
-          const user = createUser(element)
-          obj.listResult.push(user)
-          obj.listResultElements.push(element)
-        }
-        else if(findByData === 'phone' && searchElem.value.length && element.phone.indexOf(searchElem.value) !== -1){
-          const user = createUser(element)
-          obj.listResult.push(user)
-          obj.listResultElements.push(element)
-        }
-      })
-    }
+    if(!searchElem.value.trim() || !config.initialListUsers.length) return
+    const dataSearch = config.state.length ? [...config.state[config.state.length - 1].listResultElements] : [...config.initialListUsers]
+    dataSearch.forEach(element => {
+      if(findByData === 'name' && `${element.name.first} ${element.name.last}`.indexOf(searchElem.value) !== -1){
+        const user = createUser(element)
+        obj.listResult.push(user)
+        obj.listResultElements.push(element)
+      }
+      else if(findByData === 'phone' && element.phone.indexOf(searchElem.value) !== -1){
+        const user = createUser(element)
+        obj.listResult.push(user)
+        obj.listResultElements.push(element)
+      }
+    })
     config.state.push(obj)
 
     friendsList.innerHTML = ''
