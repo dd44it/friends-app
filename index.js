@@ -173,17 +173,24 @@ document.addEventListener('DOMContentLoaded', () => {
   // select by gender
 
   function genderData(parentWrapperSelector, inputSelector){
+    const obj = {}
+    obj.id = config.state.length + 1
+    obj.type = 'selectByGender'
     const parentWrapper = document.querySelector(parentWrapperSelector)
     const listRadioBtn = parentWrapper.querySelectorAll(inputSelector)
     const selectedRadioBtn = [...listRadioBtn].find(item => item.checked)
     if(!selectedRadioBtn) return
-    else if(selectedRadioBtn.id === 'all') return resetData() 
-    const listGender = config.initialListUsers.filter(item => item.gender === selectedRadioBtn.id)
+    obj.searching = selectedRadioBtn.id
+    const dataSelectByGender = config.state.length ? [...config.state[config.state.length - 1].listResultElements] : [...config.initialListUsers]
+    const listGender = dataSelectByGender.filter(item => item.gender !== 'all' ? item.gender === selectedRadioBtn.id : item)
     friendsList.innerHTML = ''
-    listGender.forEach(element => {
+    obj.listResultElements = listGender.length ? listGender : config.initialListUsers
+    config.state.push(obj)
+    obj.listResultElements.forEach(element => {
       const user = createUser(element)
       friendsList.insertAdjacentHTML('beforeend', user.render())
     })
+    drawFilterUsedCard(config.state)
   }
 
 // select by age min and max
