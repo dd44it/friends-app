@@ -79,7 +79,7 @@ li {
 
 .friends-list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, .25fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, .25fr));
   gap: 20px;
 }
 
