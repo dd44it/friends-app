@@ -1,6 +1,7 @@
 import FriendsList from '/js/FriendsList.js'
 import FilterUsed from '/js/FilterUsed.js'
 import config from '/js/config.js'
+import Pagination from './js/Pagination.js'
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -16,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const genderBtn = document.querySelector('.btn-gender')
   const selectAgeMinMaxBtn = document.querySelector('.btn-age')
   const wrapperFilterUsed = document.querySelector('.filter-used-wrapper')
+  const paginationWrapper = document.querySelector('.pagination')
 
   const userNodFound = '<h2>User not found</h2>'
 
@@ -31,12 +33,16 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   async function drawCard(){
-    const data = await getData('https://randomuser.me/api/?page=1&results=20&seed=abc')
+    const data = await getData('https://randomuser.me/api/?page=1&results=50&seed=abc')
     if(data && data.results) config.initialListUsers = data.results
     else return
-    data.results.forEach(element => {
+    data.results.forEach( (element, index) => {
       const user = createUser(element)
       friendsList.insertAdjacentHTML('beforeend', user.render())
+      if(data.results.length > 10 && index % 10 === 0){
+        const pagination = new Pagination( (index + 10) / 10 )
+        paginationWrapper.insertAdjacentHTML('beforeend', pagination.render())
+      }
     })
   }
 
