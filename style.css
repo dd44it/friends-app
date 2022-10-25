@@ -278,6 +278,12 @@ li {
 .btn-pagination {
   width: max-content;
 }
+.btn-pagination.active {
+  background-color: rgb(142, 63, 220);
+}
+.btn-pagination.active:hover {
+  background-color: rgb(95, 43, 147);
+}
 
 @media(max-width: 768px) {
   .friends-app {

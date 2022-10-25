@@ -4,7 +4,7 @@ export default class Pagination{
   }
   render(){
     return `
-      <div class="btn btn-pagination"> ${this.index} </div>
+      <div class="btn btn-pagination" data-index=${this.index}> ${this.index} </div>
     `
   }
 }
