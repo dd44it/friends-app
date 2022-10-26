@@ -34,32 +34,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function drawCard(){
     const data = await getData('https://randomuser.me/api/?page=1&results=50&seed=abc')
-    if(data && data.results) config.initialListUsers = data.results
+    if(data && data.results){ 
+      config.initialListUsers = data.results
+      config.countBtnPagination = Math.floor(config.initialListUsers.length / config.showCard) || 1
+    }
     else return
-    data.results.forEach( (element, index) => {
-      if(data.results.length > 10 && index % 10 === 0){
-        const pagination = new Pagination( (index + 10) / 10 )
+    createPageCard()
+  }
+
+  function createPageCard(){
+    const dataPage = config.state.length ? [...config.state[config.state.length - 1].listResultElements] : [...config.initialListUsers]
+    dataPage.forEach( (elem, index) => {
+      if(index < config.countBtnPagination){
+        const pagination = new Pagination( index + 1 )
         paginationWrapper.insertAdjacentHTML('beforeend', pagination.render())
+        const buttonsPagination = paginationWrapper.querySelectorAll('.btn-pagination')
+        buttonsPagination.forEach(btn => btn.addEventListener('click', e => { renderLayout(e, btn.dataset.index, buttonsPagination) }))
+        renderLayout(buttonsPagination[0], config.initialBtnPaginationIndex, buttonsPagination)
       }
     })
-    const buttonsPagination = paginationWrapper.querySelectorAll('.btn-pagination')
-    buttonsPagination.forEach(btn => {
-      btn.addEventListener('click', e => { drawCardPage(e, btn.dataset.index, buttonsPagination) } )
-    })
+  }
 
-    drawCardPage(buttonsPagination[0], 1, buttonsPagination)
-    function drawCardPage(e, numPage, btnList){
-      const elemBtn = e.target ?? e
-      btnList.forEach(btn => btn.classList.remove('active') )
-      elemBtn.classList.add('active')
-      friendsList.innerHTML = ''
-      const dataPage = config.state.length ? [...config.state[config.state.length - 1].listResultElements] : [...config.initialListUsers]
-      for(let i = numPage * 10 - 10; i < dataPage.length; i++){
-        if(i < numPage * 10){
-          const user = createUser(dataPage[i])
-          friendsList.insertAdjacentHTML('beforeend', user.render())
-          window.scrollTo({top: 0, behavior: 'smooth'})
-        }
+  function renderLayout(e, numPage, paginationList){
+    friendsList.innerHTML = ''
+    paginationList.forEach(btn => btn.classList.remove('active'))
+    const paginationBtn = e.target ?? e
+    paginationBtn.classList.add('active')
+    const dataPage = config.state.length ? [...config.state[config.state.length - 1].listResultElements] : [...config.initialListUsers]
+    for(let i = numPage * config.showCard - config.showCard; i < dataPage.length; i++){
+      if(i < numPage * config.showCard){
+        const user = createUser(dataPage[i])
+        friendsList.insertAdjacentHTML('beforeend', user.render())
+        window.scrollTo({top: 0, behavior: 'smooth'})
       }
     }
   }
