@@ -44,6 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function createPageCard(){
     const dataPage = config.state.length ? [...config.state[config.state.length - 1].listResultElements] : [...config.initialListUsers]
+    config.countBtnPagination = Math.floor(dataPage.length / config.showCard) || 1
+    paginationWrapper.innerHTML = ''
     dataPage.forEach( (elem, index) => {
       if(index < config.countBtnPagination){
         const pagination = new Pagination( index + 1 )
@@ -110,16 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })
     config.state.push(obj)
 
-    friendsList.innerHTML = ''
-    if(!obj.listResult.length) {
-      friendsList.insertAdjacentHTML('beforeend', userNodFound)
-      const filterUsed = new FilterUsed('searching', searchElem.value)
-      wrapperFilterUsed.insertAdjacentHTML('beforeend', filterUsed.render())
-      return
-    }
-    obj.listResult.forEach(user => {
-      friendsList.insertAdjacentHTML('beforeend', user.render())
-    })
+    createPageCard()
     drawFilterUsedCard(config.state)
   }
 
@@ -137,26 +130,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const dataSort = config.state.length ? [...config.state[config.state.length - 1].listResultElements] : [...config.initialListUsers]
         console.log(dataSort)
         dataSort.sort( (a, b) => a.dob.age - b.dob.age)
-        friendsList.innerHTML = ''
         obj.listResultElements = dataSort
         config.state.push(obj)
-        dataSort.forEach(element => {
-          const user = createUser(element)
-          friendsList.insertAdjacentHTML('beforeend', user.render())
-        })
+        createPageCard()
         drawFilterUsedCard(config.state)
       }
 
       else if(typeFilter === 'age' && typeSort === 'desc'){
         const dataSort = config.state.length ? [...config.state[config.state.length - 1].listResultElements] : [...config.initialListUsers]
         dataSort.sort( (a, b) => b.dob.age - a.dob.age)
-        friendsList.innerHTML = ''
         obj.listResultElements = dataSort
         config.state.push(obj)
-        dataSort.forEach(element => {
-          const user = createUser(element)
-          friendsList.insertAdjacentHTML('beforeend', user.render())
-        })
+        createPageCard()
         drawFilterUsedCard(config.state)
       }
 
@@ -169,13 +154,9 @@ document.addEventListener('DOMContentLoaded', () => {
           if (fa > fb) { return 1 }
           return 0
         })
-        friendsList.innerHTML = ''
         obj.listResultElements = dataSort
         config.state.push(obj)
-        dataSort.forEach(element => {
-          const user = createUser(element)
-          friendsList.insertAdjacentHTML('beforeend', user.render())
-        })
+        createPageCard()
         drawFilterUsedCard(config.state)
       }
 
@@ -188,13 +169,9 @@ document.addEventListener('DOMContentLoaded', () => {
           if (fb > fa) { return 1 }
           return 0
         })
-        friendsList.innerHTML = ''
         obj.listResultElements = dataSort
         config.state.push(obj)
-        dataSort.forEach(element => {
-          const user = createUser(element)
-          friendsList.insertAdjacentHTML('beforeend', user.render())
-        })
+        createPageCard()
         drawFilterUsedCard(config.state)
       }
     }
@@ -213,13 +190,9 @@ document.addEventListener('DOMContentLoaded', () => {
     obj.searching = selectedRadioBtn.id
     const dataSelectByGender = config.state.length ? [...config.state[config.state.length - 1].listResultElements] : [...config.initialListUsers]
     const listGender = dataSelectByGender.filter(item => item.gender !== 'all' ? item.gender === selectedRadioBtn.id : item)
-    friendsList.innerHTML = ''
     obj.listResultElements = listGender.length ? listGender : config.initialListUsers
     config.state.push(obj)
-    obj.listResultElements.forEach(element => {
-      const user = createUser(element)
-      friendsList.insertAdjacentHTML('beforeend', user.render())
-    })
+    createPageCard()
     drawFilterUsedCard(config.state)
   }
 
@@ -242,13 +215,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     const dataSelectByAge = config.state.length ? [...config.state[config.state.length - 1].listResultElements] : [...config.initialListUsers]
     const findDiapasonAge = dataSelectByAge.filter(element => +ageMinElem.value <= element.dob.age && +ageMaxElem.value >= element.dob.age)
-    friendsList.innerHTML = ''
     obj.listResultElements = findDiapasonAge
     config.state.push(obj)
-    obj.listResultElements.forEach(element => {
-      const user = createUser(element)
-      friendsList.insertAdjacentHTML('beforeend', user.render())
-    })
+    createPageCard()
     drawFilterUsedCard(config.state)
   }
 
