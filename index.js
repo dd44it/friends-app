@@ -188,7 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const selectedRadioBtn = [...listRadioBtn].find(item => item.checked)
     if(!selectedRadioBtn) return
     obj.searching = selectedRadioBtn.id
-    const dataSelectByGender = config.state.length ? [...config.state[config.state.length - 1].listResultElements] : [...config.initialListUsers]
+    const dataSelectByGender = [...config.initialListUsers]
     const listGender = dataSelectByGender.filter(item => item.gender !== 'all' ? item.gender === selectedRadioBtn.id : item)
     obj.listResultElements = listGender.length ? listGender : config.initialListUsers
     config.state.push(obj)
