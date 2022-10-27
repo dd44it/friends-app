@@ -2,6 +2,8 @@ import FriendsList from '/js/FriendsList.js'
 import FilterUsed from '/js/FilterUsed.js'
 import config from '/js/config.js'
 import Pagination from './js/Pagination.js'
+import Loader from './js/Loader.js'
+import ErrorMessage from './js/ErrorMessage.js'
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -19,7 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const selectAgeMinMaxBtn = filterWrapper.querySelector('.btn-age')
   const wrapperFilterUsed = document.querySelector('.filter-used-wrapper')
   const paginationWrapper = document.querySelector('.pagination')
-
+  const loader = new Loader('.loader')
+  
   async function getData(url){
     try{
       const response = await fetch(url)
@@ -27,12 +30,15 @@ document.addEventListener('DOMContentLoaded', () => {
       return result
     }
     catch(error){
-      console.log(error)
+      loader.hide()
+      const errorEx = new ErrorMessage(error.message)
+      friendsList.insertAdjacentHTML('beforeend', errorEx.render())
     }
   }
 
   async function drawCard(){
-    const data = await getData('https://randomuser.me/api/?page=1&results=50&seed=abc')
+    friendsList.insertAdjacentHTML('afterbegin', loader.render())
+    const data = await getData('https://randomuser3.me/api/?page=1&results=50&seed=abc')
     if(data && data.results){ 
       config.initialListUsers = data.results
       config.countBtnPagination = Math.floor(config.initialListUsers.length / config.showCard) || 1
@@ -51,15 +57,17 @@ document.addEventListener('DOMContentLoaded', () => {
     else {
       config.countBtnPagination = Math.floor(dataPage.length / config.showCard) || 1
       paginationWrapper.innerHTML = ''
-      dataPage.forEach( (elem, index) => {
-        if(index < config.countBtnPagination){
-          const pagination = new Pagination( index + 1 )
-          paginationWrapper.insertAdjacentHTML('beforeend', pagination.render())
-          const buttonsPagination = paginationWrapper.querySelectorAll('.btn-pagination')
-          buttonsPagination.forEach(btn => btn.addEventListener('click', e => { renderLayout(e, btn.dataset.index, buttonsPagination) }))
-          renderLayout(buttonsPagination[0], config.initialBtnPaginationIndex, buttonsPagination)
-        }
-      })
+      setTimeout(() => {
+        dataPage.forEach( (elem, index) => {
+          if(index < config.countBtnPagination){
+            const pagination = new Pagination( index + 1 )
+            paginationWrapper.insertAdjacentHTML('beforeend', pagination.render())
+            const buttonsPagination = paginationWrapper.querySelectorAll('.btn-pagination')
+            buttonsPagination.forEach(btn => btn.addEventListener('click', e => { renderLayout(e, btn.dataset.index, buttonsPagination) }))
+            renderLayout(buttonsPagination[0], config.initialBtnPaginationIndex, buttonsPagination)
+          }
+        })
+      }, 1000)
     }
   }
 
