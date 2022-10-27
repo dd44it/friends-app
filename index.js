@@ -6,20 +6,19 @@ import Pagination from './js/Pagination.js'
 document.addEventListener('DOMContentLoaded', () => {
 
   const friendsList = document.querySelector('.friends-list')
-  const searchByName = document.querySelector('.filter-search__name .btn')
-  const searchByPhone = document.querySelector('.filter-search__phone .btn')
-  const sortByAgeAsc = document.querySelector('.btn-asc-age')
-  const sortByAgeDesc = document.querySelector('.btn-desc-age')
+  const filterWrapper = document.querySelector('.filter-friends')
+  const searchByName = filterWrapper.querySelector('.filter-search__name .btn')
+  const searchByPhone = filterWrapper.querySelector('.filter-search__phone .btn')
+  const sortByAgeAsc = filterWrapper.querySelector('.btn-asc-age')
+  const sortByAgeDesc = filterWrapper.querySelector('.btn-desc-age')
 
-  const sortByNameAsc = document.querySelector('.btn-asc-name')
-  const sortByNameDesc = document.querySelector('.btn-desc-name')
-  const resetBtn = document.querySelector('.btn-reset')
-  const genderBtn = document.querySelector('.btn-gender')
-  const selectAgeMinMaxBtn = document.querySelector('.btn-age')
+  const sortByNameAsc = filterWrapper.querySelector('.btn-asc-name')
+  const sortByNameDesc = filterWrapper.querySelector('.btn-desc-name')
+  const resetBtn = filterWrapper.querySelector('.btn-reset')
+  const genderBtn = filterWrapper.querySelector('.btn-gender')
+  const selectAgeMinMaxBtn = filterWrapper.querySelector('.btn-age')
   const wrapperFilterUsed = document.querySelector('.filter-used-wrapper')
   const paginationWrapper = document.querySelector('.pagination')
-
-  const userNodFound = '<h2>User not found</h2>'
 
   async function getData(url){
     try{
@@ -44,17 +43,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function createPageCard(){
     const dataPage = config.state.length ? [...config.state[config.state.length - 1].listResultElements] : [...config.initialListUsers]
-    config.countBtnPagination = Math.floor(dataPage.length / config.showCard) || 1
-    paginationWrapper.innerHTML = ''
-    dataPage.forEach( (elem, index) => {
-      if(index < config.countBtnPagination){
-        const pagination = new Pagination( index + 1 )
-        paginationWrapper.insertAdjacentHTML('beforeend', pagination.render())
-        const buttonsPagination = paginationWrapper.querySelectorAll('.btn-pagination')
-        buttonsPagination.forEach(btn => btn.addEventListener('click', e => { renderLayout(e, btn.dataset.index, buttonsPagination) }))
-        renderLayout(buttonsPagination[0], config.initialBtnPaginationIndex, buttonsPagination)
-      }
-    })
+    if(config.error) {
+      paginationWrapper.innerHTML = ''
+      friendsList.innerHTML = `<h2>${config.error}</h2>`
+      return false
+    }
+    else {
+      config.countBtnPagination = Math.floor(dataPage.length / config.showCard) || 1
+      paginationWrapper.innerHTML = ''
+      dataPage.forEach( (elem, index) => {
+        if(index < config.countBtnPagination){
+          const pagination = new Pagination( index + 1 )
+          paginationWrapper.insertAdjacentHTML('beforeend', pagination.render())
+          const buttonsPagination = paginationWrapper.querySelectorAll('.btn-pagination')
+          buttonsPagination.forEach(btn => btn.addEventListener('click', e => { renderLayout(e, btn.dataset.index, buttonsPagination) }))
+          renderLayout(buttonsPagination[0], config.initialBtnPaginationIndex, buttonsPagination)
+        }
+      })
+    }
   }
 
   function renderLayout(e, numPage, paginationList){
@@ -99,17 +105,18 @@ document.addEventListener('DOMContentLoaded', () => {
     if(!searchElem.value.trim() || !config.initialListUsers.length) return
     const dataSearch = config.state.length ? [...config.state[config.state.length - 1].listResultElements] : [...config.initialListUsers]
     dataSearch.forEach(element => {
-      if(findByData === 'name' && `${element.name.first} ${element.name.last}`.indexOf(searchElem.value) !== -1){
+      if(findByData === 'name' && `${element.name.first} ${element.name.last}`.indexOf(searchElem.value.trim()) !== -1){
         const user = createUser(element)
         obj.listResult.push(user)
         obj.listResultElements.push(element)
       }
-      else if(findByData === 'phone' && element.phone.indexOf(searchElem.value) !== -1){
+      else if(findByData === 'phone' && element.phone.indexOf(searchElem.value.trim()) !== -1){
         const user = createUser(element)
         obj.listResult.push(user)
         obj.listResultElements.push(element)
       }
     })
+    if(!obj.listResultElements.length) config.error = 'Data not found' 
     config.state.push(obj)
 
     createPageCard()
@@ -223,10 +230,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // reset
   function resetData(){
-    friendsList.innerHTML = ''
-    config.initialListUsers.forEach(element => {
-      const user = createUser(element)
-      friendsList.insertAdjacentHTML('beforeend', user.render())
+    wrapperFilterUsed.innerHTML = ''
+    if(config.error) delete config.error
+    config.state.length = 0
+    createPageCard()
+    const allInput = filterWrapper.querySelectorAll('input')
+    allInput.forEach(item => {
+      item.value = ''
+      item.checked = false
     })
   }
 
@@ -235,14 +246,17 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function drawFilterUsedCard(state){
-    console.log(state)
+    // console.log(state)
     if(!state.length) return
     wrapperFilterUsed.innerHTML = ''
     for(let elemState of state){
       const filterUsed = new FilterUsed(elemState.type, elemState.searching)
       wrapperFilterUsed.insertAdjacentHTML('beforeend', filterUsed.render(elemState.id))
       const btnsClose = wrapperFilterUsed.querySelectorAll('.btn-close')
-      btnsClose.forEach(close => close.addEventListener('click', (e) => { filterUsed.remove(e, elemState, friendsList) }))
+      btnsClose.forEach(close => close.addEventListener('click', (e) => { 
+        filterUsed.remove(e, elemState)
+        createPageCard()
+       }))
     }
   }
 

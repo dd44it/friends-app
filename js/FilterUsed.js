@@ -15,28 +15,12 @@ export default class FilterUsed {
     </div>
     `
   }
-  remove(e, state, parentCardWrapper){
+  remove(e, state){
     e.stopImmediatePropagation()
     const elem = e.currentTarget
     const parentWrapperFilter = elem.parentElement
     config.state = config.state.filter(item => item.id !== state.id)
     parentWrapperFilter.remove()
-    this.update(config.state, parentCardWrapper)
-  }
-
-  update(state, parentCardWrapper){
-    parentCardWrapper.innerHTML = ''
-    if(state.length){
-      state[state.length - 1].listResultElements.forEach(element => {
-        const user = new FriendsList(`${element.name.first} ${element.name.last}`, element.dob.age, element.phone, element.gender, element.picture.large)
-        parentCardWrapper.insertAdjacentHTML('beforeend', user.render())
-      })
-    }
-    else{
-      config.initialListUsers.forEach(element => {
-        const user = new FriendsList(`${element.name.first} ${element.name.last}`, element.dob.age, element.phone, element.gender, element.picture.large)
-        parentCardWrapper.insertAdjacentHTML('beforeend', user.render())
-      })
-    }
+    if(config.error) delete config.error
   }
 }
