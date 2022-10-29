@@ -11,11 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const filterWrapper = document.querySelector('.filter-friends')
   const searchByName = filterWrapper.querySelector('.filter-search__name .btn')
   const searchByPhone = filterWrapper.querySelector('.filter-search__phone .btn')
-  const sortByAgeAsc = filterWrapper.querySelector('.btn-asc-age')
-  const sortByAgeDesc = filterWrapper.querySelector('.btn-desc-age')
 
-  const sortByNameAsc = filterWrapper.querySelector('.btn-asc-name')
-  const sortByNameDesc = filterWrapper.querySelector('.btn-desc-name')
   const resetBtn = filterWrapper.querySelector('.btn-reset')
   const genderBtn = filterWrapper.querySelector('.btn-gender')
   const selectAgeMinMaxBtn = filterWrapper.querySelector('.btn-age')
@@ -38,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function drawCard(){
     friendsList.insertAdjacentHTML('afterbegin', loader.render())
-    const data = await getData('https://randomuser3.me/api/?page=1&results=50&seed=abc')
+    const data = await getData('https://randomuser.me/api/?page=1&results=50&seed=abc')
     if(data && data.results){ 
       config.initialListUsers = data.results
       config.countBtnPagination = Math.floor(config.initialListUsers.length / config.showCard) || 1
@@ -89,11 +85,8 @@ document.addEventListener('DOMContentLoaded', () => {
   drawCard()
   searchByName.addEventListener('click', (e) => { searchData('.search_name', e.target.dataset.filter) })
   searchByPhone.addEventListener('click', (e) => { searchData('.search_phone', e.target.dataset.filter) })
-  sortByAgeAsc.addEventListener('click', (e) => { sortData(e.currentTarget.dataset.typefilter, e.currentTarget.dataset.typesort) })
-  sortByAgeDesc.addEventListener('click', (e) => { sortData(e.currentTarget.dataset.typefilter, e.currentTarget.dataset.typesort) })
+  filterWrapper.addEventListener('click',  function(e) { sortData(e, e.target.dataset.typefilter, e.target.dataset.typesort) } )
 
-  sortByNameAsc.addEventListener('click', (e) => { sortData(e.currentTarget.dataset.typefilter, e.currentTarget.dataset.typesort) })
-  sortByNameDesc.addEventListener('click', (e) => { sortData(e.currentTarget.dataset.typefilter, e.currentTarget.dataset.typesort) })
   resetBtn.addEventListener('click', resetData)
   genderBtn.addEventListener('click', (e) => { genderData('.radio_wrapper', 'input[type="radio"]') })
   selectAgeMinMaxBtn.addEventListener('click', (e) => { selectAgeMinMaxData('.age_start', '.age_end') })
@@ -133,17 +126,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // sort type sort
 
-  function sortData(typeFilter, typeSort){
+  function sortData(e, typeFilter, typeSort){
     const obj = {}
     obj.id = config.state.length + 1
-    obj.type = 'sort'
+    obj.type = `sortBy${typeFilter}`
     obj.typeFilter = typeFilter
     obj.searching = typeSort
 
     if(config.initialListUsers){
       if(typeFilter === 'age' && typeSort === 'asc'){
         const dataSort = config.state.length ? [...config.state[config.state.length - 1].listResultElements] : [...config.initialListUsers]
-        console.log(dataSort)
         dataSort.sort( (a, b) => a.dob.age - b.dob.age)
         obj.listResultElements = dataSort
         config.state.push(obj)
