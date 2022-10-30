@@ -9,7 +9,16 @@
 body {
   font-family: 'Lucida Sans', sans-serif;
   font-size: 1rem;
+}
+
+body.light {
   background-color: #f2f2f2;
+  color: #516257;
+}
+
+body.dark {
+  background-color: #1F1D36;
+  color: #E9A6A6;
 }
 
 ul, 
@@ -37,8 +46,16 @@ li {
   align-self: center;
 }
 
+.title-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
 .title {
   text-align: center;
+  line-height: 50px;
 }
 
 .main {
@@ -56,7 +73,8 @@ li {
     "filter friend-cards"
     "filter friend-cards";
   grid-template-columns: minmax(300px, 450px) repeat(1, minmax(0, 1fr));
-  gap: 20px;
+  gap: 15px;
+  padding: 0 20px;
 }
 
 .filter-used-wrapper {
@@ -69,7 +87,6 @@ li {
 
 .filter-friends-wrapper {
   grid-area: filter;
-  padding: 20px;
 }
 
 .friends-list-wrapper {
@@ -85,13 +102,23 @@ li {
 
 .friends-list__item {
   max-width: 300px;
-  background-color: #fbfbfb;
   color: rgb(89, 89, 89);
   border-radius: 12px;
   box-shadow: 2px 2px 2px 3px rgb(0 0 0 / 2%);
   padding: 20px;
   text-align: center;
 }
+
+body.light .friends-list__item {
+  background-color: #fbfbfb;
+  color: rgb(89, 89, 89);
+}
+
+body.dark .friends-list__item {
+  background-color: #3a3563;
+  color: #E9A6A6;
+}
+
 .friends-list__item,
 .friends-list__item .user_photo,
 .user_content > *,
@@ -105,10 +132,17 @@ li {
 }
 
 .user__name {
-  font-weight: 600;
+  font-weight: bold;
   font-size: 1.2rem;
-  color: rgb(40, 40, 40);
   text-align: center;
+}
+
+body.light .user__name {
+  color: rgb(40, 40, 40);
+}
+
+body.dark .user__name {
+  color: #cf5555;
 }
 
 .flex_column {
@@ -134,7 +168,6 @@ li {
 
 .filter_title {
   text-align: center;
-  color: rgb(58, 58, 58);
   margin-bottom: 5px;
 }
 
@@ -329,6 +362,15 @@ li {
 .btn-desc-name,
 .btn-desc-age {
   background: url('/images/filter/filter_desc_icon.svg') no-repeat center rgb(38, 36, 36);
+}
+
+.toggle-btn {
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  width: 50px;
+  position: absolute;
+  right: 20px;
 }
 
 @keyframes opacitychange{
