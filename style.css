@@ -356,12 +356,12 @@ body.dark .user__name {
 
 .btn-asc-name,
 .btn-asc-age {
-  background: url('/images/filter/filter_asc_icon.svg') no-repeat center rgb(38, 36, 36);
+  background: url('./images/filter/filter_asc_icon.svg') no-repeat center rgb(38, 36, 36);
 }
 
 .btn-desc-name,
 .btn-desc-age {
-  background: url('/images/filter/filter_desc_icon.svg') no-repeat center rgb(38, 36, 36);
+  background: url('./images/filter/filter_desc_icon.svg') no-repeat center rgb(38, 36, 36);
 }
 
 .toggle-btn {
