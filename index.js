@@ -4,7 +4,6 @@ import config from './js/config.js'
 import Pagination from './js/Pagination.js'
 import Loader from './js/Loader.js'
 import ErrorMessage from './js/ErrorMessage.js'
-import setColorBody from './js/setColorBody.js'
 import renderHeader from './js/header/renderHeader.js'
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -21,7 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const wrapperFilterUsed = document.querySelector('.filter-used-wrapper')
   const paginationWrapper = document.querySelector('.pagination')
   const loader = new Loader('.loader')
-  setColorBody()
   
   async function getData(url){
     try{

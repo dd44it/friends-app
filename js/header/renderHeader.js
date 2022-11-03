@@ -1,3 +1,5 @@
+import setColorBody from '../setColorBody.js'
+
 class Header{
   render(){
     return `
@@ -19,6 +21,7 @@ function renderHeader(){
   const body = document.querySelector('body')
   const header = new Header()
   body.insertAdjacentHTML('afterbegin', header.render())
+  setColorBody()
 }
 
 export default renderHeader
