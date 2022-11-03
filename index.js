@@ -5,9 +5,11 @@ import Pagination from './js/Pagination.js'
 import Loader from './js/Loader.js'
 import ErrorMessage from './js/ErrorMessage.js'
 import setColorBody from './js/setColorBody.js'
+import renderHeader from './js/header/renderHeader.js'
 
 document.addEventListener('DOMContentLoaded', () => {
-
+  const body = document.querySelector('body')
+  renderHeader()
   const friendsList = document.querySelector('.friends-list')
   const filterWrapper = document.querySelector('.filter-friends')
   const searchByName = filterWrapper.querySelector('.filter-search__name .btn')
