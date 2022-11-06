@@ -1,12 +1,20 @@
 import FilterUsed from './js/FilterUsed.js'
+import FriendsList from "./js/FriendsList.js"
 import config from './js/config.js'
 import { drawCard, createPageCard } from './js/main/renderCards.js'
+import { drawFilter } from './js/main/renderFilter.js'
+import { drawFilterUsedCard } from './js/main/renderFilterUsed.js'
+import resetData from './js/main/resetData.js'
+import createUser from './js/main/createUser.js'
+
 
 import renderHeader from './js/header/renderHeader.js'
 
 document.addEventListener('DOMContentLoaded', () => {
   renderHeader()
   drawCard()
+  drawFilter()
+  // renderFilterUsed()
   // const friendsList = document.querySelector('.friends-list')
   const filterWrapper = document.querySelector('.filter-friends')
   const searchByName = filterWrapper.querySelector('.filter-search__name .btn')
@@ -15,11 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const resetBtn = filterWrapper.querySelector('.btn-reset')
   const genderBtn = filterWrapper.querySelector('.btn-gender')
   const selectAgeMinMaxBtn = filterWrapper.querySelector('.btn-age')
-  const wrapperFilterUsed = document.querySelector('.filter-used-wrapper')
   
-
-
- 
   searchByName.addEventListener('click', (e) => { searchData('.search_name', e.target.dataset.filter) })
   searchByPhone.addEventListener('click', (e) => { searchData('.search_phone', e.target.dataset.filter) })
   filterWrapper.addEventListener('click',  function(e) { sortData(e, e.target.dataset.typefilter, e.target.dataset.typesort) } )
@@ -163,38 +167,6 @@ document.addEventListener('DOMContentLoaded', () => {
     config.state.push(obj)
     createPageCard()
     drawFilterUsedCard(config.state)
-  }
-
-  // reset
-  function resetData(){
-    wrapperFilterUsed.innerHTML = ''
-    if(config.error) delete config.error
-    config.state.length = 0
-    createPageCard()
-    const allInput = filterWrapper.querySelectorAll('input')
-    allInput.forEach(item => {
-      item.value = ''
-      item.checked = false
-    })
-  }
-
-  function createUser(element){
-    return new FriendsList(`${element.name.first} ${element.name.last}`, element.dob.age, element.phone, element.gender, element.picture.large)
-  }
-
-  function drawFilterUsedCard(state){
-    // console.log(state)
-    if(!state.length) return
-    wrapperFilterUsed.innerHTML = ''
-    for(let elemState of state){
-      const filterUsed = new FilterUsed(elemState.type, elemState.searching)
-      wrapperFilterUsed.insertAdjacentHTML('beforeend', filterUsed.render(elemState.id))
-      const btnsClose = wrapperFilterUsed.querySelectorAll('.btn-close')
-      btnsClose.forEach(close => close.addEventListener('click', (e) => { 
-        filterUsed.remove(e, elemState)
-        createPageCard()
-       }))
-    }
   }
 
 })
