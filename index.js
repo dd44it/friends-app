@@ -1,5 +1,3 @@
-import FilterUsed from './js/FilterUsed.js'
-import FriendsList from "./js/FriendsList.js"
 import config from './js/config.js'
 import { drawCard, createPageCard } from './js/main/renderCards.js'
 import { drawFilter } from './js/main/renderFilter.js'
@@ -13,9 +11,7 @@ import renderHeader from './js/header/renderHeader.js'
 document.addEventListener('DOMContentLoaded', () => {
   renderHeader()
   drawCard()
-  drawFilter()
-  // renderFilterUsed()
-  // const friendsList = document.querySelector('.friends-list')
+  // drawFilter()
   const filterWrapper = document.querySelector('.filter-friends')
   const searchByName = filterWrapper.querySelector('.filter-search__name .btn')
   const searchByPhone = filterWrapper.querySelector('.filter-search__phone .btn')
